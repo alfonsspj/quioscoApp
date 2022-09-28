@@ -18,7 +18,7 @@ const QuioscoProvider = ({children}) => {
     }, [])
 
     useEffect(() => {
-        setCategoriaActual(categorias[0])
+        setCategoriaActual(categorias[0]) // categoria por default o
     }, [categorias])
 
     const handleClickCategoria = id => {

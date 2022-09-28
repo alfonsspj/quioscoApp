@@ -24,7 +24,7 @@ model Categoria {
   id Int @id @default(autoincrement())
   nombre String
   icono String
-  productos Producto[]
+  productos Producto[] // va a tener multiples productos
 }
 
 model Orden {
