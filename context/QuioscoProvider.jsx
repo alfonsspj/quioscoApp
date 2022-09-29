@@ -41,7 +41,17 @@ const QuioscoProvider = ({children}) => {
 
     // Agregar y actualizar pedidos
     const handleAgregarPedido = ({categoriaId, imagen, ...producto}) => {
-        setPedido([...pedido, producto])
+        // verificar que el producto no este duplicado
+        if(pedido.some(productoState => productoState.id === producto.id)){
+            // Actualizar la cantidad
+            const pedidoActualizado = pedido.map(productoState => productoState.id === producto.id ? producto : productoState)
+            setPedido(pedidoActualizado)
+        }else {
+            // hay que agregar
+            setPedido([...pedido, producto])
+        }
+
+        setModal(false)
     }
     return(
         <QuioscoContext.Provider
@@ -53,7 +63,8 @@ const QuioscoProvider = ({children}) => {
                 handleSetProducto,
                 modal,
                 handleChangeModal,
-                handleAgregarPedido
+                handleAgregarPedido,
+                pedido
             }}
         >
             {children}
