@@ -1,7 +1,25 @@
 import Head from 'next/head'
+import Modal from 'react-modal'
 import Sidebar from '../components/Sidebar'
+import useQuiosco from '../hooks/useQuiosco';
+
+// styles de modal
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+// para montarlo en caso de next es id=__next (root en el caso de vite)(es donde se monta la aplicacion)
+Modal.setAppElement('#__next'); // es el elemento principal 
 
 export default function Layout({children, pagina}) {
+
+    const { modal } = useQuiosco()
     return (
       <>
         <Head>
@@ -18,6 +36,12 @@ export default function Layout({children, pagina}) {
                 <div className='p-10'>{children}</div>
             </main>
         </div>
+
+        {modal && (
+          <Modal isOpen={modal} style={customStyles}>
+            <h1>Modal...</h1>
+          </Modal>
+        )} 
       </>
     )
   }
