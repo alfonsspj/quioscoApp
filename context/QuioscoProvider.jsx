@@ -11,6 +11,7 @@ const QuioscoProvider = ({children}) => {
     const [producto, setProducto] = useState({})
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
+    // const [paso, setPaso] = useState(1) // por state barra de progreso
 
     const obtenerCategorias = async () => {
         const { data } = await axios('/api/categorias')
@@ -57,6 +58,12 @@ const QuioscoProvider = ({children}) => {
 
         setModal(false)
     }
+
+    // // barra de progreso
+    // const handleChangePaso = paso => {
+    //     setPaso(paso)
+    // }
+
     return(
         <QuioscoContext.Provider
             value={{
