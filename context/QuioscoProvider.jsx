@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify' // funcion que permite mandar a llamar el toast en ciertos eventos
 
 const QuioscoContext = createContext()
 
@@ -46,9 +47,12 @@ const QuioscoProvider = ({children}) => {
             // Actualizar la cantidad
             const pedidoActualizado = pedido.map(productoState => productoState.id === producto.id ? producto : productoState)
             setPedido(pedidoActualizado)
+
+            toast.success('Guardado Correctamente')
         }else {
             // hay que agregar
             setPedido([...pedido, producto])
+            toast.success('Agregado al Pedido')
         }
 
         setModal(false)
