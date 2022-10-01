@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify' // funcion que permite mandar a llamar el toast en ciertos eventos
+import { useRouter } from 'next/router'
 
 const QuioscoContext = createContext()
 
@@ -12,6 +13,7 @@ const QuioscoProvider = ({children}) => {
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
     // const [paso, setPaso] = useState(1) // por state barra de progreso
+    const router = useRouter()
 
     const obtenerCategorias = async () => {
         const { data } = await axios('/api/categorias')
@@ -30,6 +32,7 @@ const QuioscoProvider = ({children}) => {
         const categoria = categorias.filter( cat => cat.id === id)
         // console.log(categoria) // trae todo el objeto de cafe
         setCategoriaActual(categoria[0])
+        router.push('/')// en cualquier categoria, lleva hacia la pagina principal
     }
 
     // setear producto
@@ -65,15 +68,20 @@ const QuioscoProvider = ({children}) => {
     // }
 
 
-    // mostrar el modal desde un button
+    // mostrar el modal desde un button - actualizar y eliminar
     const handleEditarCantidades = id => {
         // console.log(id)
         //sacar el producto con el id buscado
-        const productoActualizar = pedido.filter( producto => producto.id === id)
+        const productoActualizar = pedido.filter( producto => producto.id === id)// el producto que se va a actualizar, selecciona uno y lo extrae
 
         setProducto(productoActualizar[0]) // retorna solo uno
         setModal(!modal)
     }
+    const handleEliminarProducto = id => {
+        const pedidoActualizado = pedido.filter( producto => producto.id !== id) // va a sacarlo del arreglo
+        setPedido(pedidoActualizado)
+    }
+
     return(
         <QuioscoContext.Provider
             value={{
@@ -86,7 +94,8 @@ const QuioscoProvider = ({children}) => {
                 handleChangeModal,
                 handleAgregarPedido,
                 pedido,
-                handleEditarCantidades        
+                handleEditarCantidades,
+                handleEliminarProducto       
             }}
         >
             {children}
