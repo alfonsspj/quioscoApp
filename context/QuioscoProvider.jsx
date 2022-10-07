@@ -13,6 +13,8 @@ const QuioscoProvider = ({children}) => {
     const [modal, setModal] = useState(false)
     const [pedido, setPedido] = useState([])
     // const [paso, setPaso] = useState(1) // por state barra de progreso
+    const [nombre, setNombre] = useState('')
+
     const router = useRouter()
 
     const obtenerCategorias = async () => {
@@ -95,7 +97,9 @@ const QuioscoProvider = ({children}) => {
                 handleAgregarPedido,
                 pedido,
                 handleEditarCantidades,
-                handleEliminarProducto       
+                handleEliminarProducto,
+                nombre,
+                setNombre
             }}
         >
             {children}
